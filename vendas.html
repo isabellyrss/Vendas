@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Vendas</title>
+</head>
+<body onload="calcular()">
+
+    <h1>Carrinho</h1>
+
+    <fieldset style="margin-bottom: 10px;">
+        <legend><strong>Produto 1</strong></legend>
+        Nome: <input type="text" placeholder="Ex: Tênis"><br><br>
+        Valor (R$): <input type="number" id="preco1" value="100" min="0" step="0.01" oninput="calcular()">
+    </fieldset>
+
+    <fieldset style="margin-bottom: 10px;">
+        <legend><strong>Produto 2</strong></legend>
+        Nome: <input type="text" placeholder="Ex: Mochila"><br><br>
+        Valor (R$): <input type="number" id="preco2" value="100" min="0" step="0.01" oninput="calcular()">
+    </fieldset>
+
+    <br>
+
+    <label>Escolha o número de parcelas: </label>
+    <select id="parcelas" onchange="calcular()">
+        <option value="1">1x</option>
+        <option value="2">2x</option>
+        <option value="3">3x</option>
+        <option value="4">4x</option>
+        <option value="5">5x</option>
+        <option value="6">6x</option>
+        <option value="7">7x</option>
+        <option value="8">8x</option>
+        <option value="9">9x</option>
+        <option value="10">10x</option>
+    </select>
+
+    <hr>
+
+    <p>Total da Venda: R$ <span id="total">0.00</span></p>
+    <p>Desconto de 10%: R$ <span id="desconto">0.00</span></p>
+    <p>Total com Desconto: R$ <span id="total-final">0.00</span></p>
+    <p>Valor da Parcela: R$ <span id="parcela">0.00</span></p>
+
+    <script>
+        function calcular() {
+            // 1. Captura o valor de cada um dos dois produtos diretamente pelo ID
+            const precoProduto1 = parseFloat(document.getElementById('preco1').value) || 0;
+            const precoProduto2 = parseFloat(document.getElementById('preco2').value) || 0;
+            const numParcelas = parseInt(document.getElementById('parcelas').value);
+
+            // 2. A soma total agora é apenas Produto 1 + Produto 2
+            const totalVenda = precoProduto1 + precoProduto2;
+
+            // 3. Regras de cálculo (Desconto e Parcelas)
+            const valorDesconto = totalVenda * 0.10;
+            const totalComDesconto = totalVenda - valorDesconto;
+            const valorDaParcela = totalComDesconto / numParcelas;
+
+            // 4. Injeta os dados finais na tela
+            document.getElementById('total').innerText = totalVenda.toFixed(2);
+            document.getElementById('desconto').innerText = valorDesconto.toFixed(2);
+            document.getElementById('total-final').innerText = totalComDesconto.toFixed(2);
+            document.getElementById('parcela').innerText = valorDaParcela.toFixed(2);
+        }
+    </script>
+
+</body>
+</html>
